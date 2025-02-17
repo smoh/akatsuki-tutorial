@@ -36,13 +36,13 @@ def _(mo):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.callout(mo.md("""You can toggle between edit and view mode with <kbd>cmd/ctrl</kbd> + <kbd>.</kbd>."""), kind='info')
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md("""## Introduction to Akatsuki mission""")
     return
