@@ -1,0 +1,13 @@
+[project]
+name = "akatsuki-getting-started"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "marimo==0.10.19",
+    "node>=1.2.2",
+    "nodejs>=0.1.1",
+    "pyodide-build>=0.25.1",
+    "pyodide-py>=0.25.1",
+]
