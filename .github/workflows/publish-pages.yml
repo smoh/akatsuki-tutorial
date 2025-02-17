@@ -1,0 +1,46 @@
+name: publish pages
+
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # allows manual triggering of the workflow
+
+jobs:
+  uv-example:
+    name: python
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          uv-version: 0.4.20
+
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "pyproject.toml"
+  
+  export-wasm:
+    name: Export notebook to wasm with marimo
+    steps:
+      - name: Build site
+        run: make publish
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+  
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './publish'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+    
+
