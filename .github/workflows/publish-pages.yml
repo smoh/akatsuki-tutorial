@@ -8,7 +8,7 @@ on:
   workflow_dispatch: # allows manual triggering of the workflow
 
 jobs:
-  uv-example:
+  deploy:
     name: python
     runs-on: ubuntu-latest
 
@@ -25,9 +25,6 @@ jobs:
         with:
           python-version-file: "pyproject.toml"
   
-  export-wasm:
-    name: Export notebook to wasm with marimo
-    steps:
       - name: Build site
         run: make publish
 
