@@ -1,7 +1,11 @@
 import marimo
 
 __generated_with = "0.10.19"
-app = marimo.App(width="medium", app_title="Akatsuki tutorial")
+app = marimo.App(
+    width="medium",
+    app_title="Akatsuki tutorial",
+    html_head_file="head.html",
+)
 
 
 @app.cell(hide_code=True)
@@ -28,7 +32,7 @@ def _(mo):
         r"""
         # Getting started with Akatsuki data
 
-        By Semyeong Oh (soh@eml.cc)
+        By [Semyeong Oh](https://smoh.page)
 
         In this tutorial, we will explore the Akatsuki UVI and LIR data, which image the Venus cloud-top in reflected light and thermal emission respectively. Before diving in, please have a look at the slides below for an overview of the mission.
         """
