@@ -42,12 +42,6 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.callout(mo.md("""You can toggle between edit and view mode with <kbd>cmd/ctrl</kbd> + <kbd>.</kbd>."""), kind='info')
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
     mo.md("""## Introduction to Akatsuki mission""")
     return
 
@@ -69,13 +63,11 @@ def slide(mo):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        """
-        Synopsis: We will now download a small subset of the data, and explore the basic data structure and properties with [xarray](https://docs.xarray.dev/en/stable/) as our main tool.
+    mo.callout(mo.md("""
+    **Synopsis**: We will now download a small subset of the data, and explore the basic data structure and properties with [xarray](https://docs.xarray.dev/en/stable/) as our main tool.
+    Everything is set up for you when you load the page. Get read to start hacking!
 
-        Everything is set up for you when you load the page. Get read to start hacking!
-        """
-    )
+    You can toggle between edit and view mode with <kbd>cmd/ctrl</kbd> + <kbd>.</kbd>."""), kind='info')
     return
 
 
