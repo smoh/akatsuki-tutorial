@@ -12,6 +12,7 @@ app = marimo.App(
 def _():
     # not used directly but for pyodide to pick up the dependency
     import netCDF4
+
     return (netCDF4,)
 
 
@@ -23,6 +24,7 @@ def _():
     import numpy as np
     import pandas as pd
     import matplotlib.pyplot as plt
+
     return Path, mo, np, pd, plt, warnings
 
 
@@ -42,13 +44,14 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md("""## Introduction to Akatsuki mission""")
+    mo.md("""## Introduction to the Akatsuki mission""")
     return
 
 
 @app.cell(hide_code=True)
 def slide(mo):
-    mo.Html("""
+    mo.Html(
+        """
     <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
      padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
      border-radius: 8px; will-change: transform;">
@@ -57,17 +60,23 @@ def slide(mo):
       </iframe>
     </div>
     <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGbHXX2Ygw&#x2F;RvcOpN1BPdgux23JSQFYOw&#x2F;view?utm_content=DAGbHXX2Ygw&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">2025 akatsuki data workshop</a> by Semyeong Oh
-    """)
+    """
+    )
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.callout(mo.md("""
+    mo.callout(
+        mo.md(
+            """
     **Synopsis**: We will now download a small subset of the data, and explore the basic data structure and properties with [xarray](https://docs.xarray.dev/en/stable/) as our main tool.
-    Everything is set up for you when you load the page. Get read to start hacking!
+    Everything is set up for you when you load the page. Get ready to start hacking!
 
-    You can toggle between edit and view mode with <kbd>cmd/ctrl</kbd> + <kbd>.</kbd>."""), kind='info')
+    You can toggle between edit and view mode with <kbd>cmd/ctrl</kbd> + <kbd>.</kbd>."""
+        ),
+        kind="info",
+    )
     return
 
 
@@ -87,7 +96,9 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md("""Now, let's go specifically to UVI data archive. You will mainly work with **Level 3 map data**. What does this mean?""")
+    mo.md(
+        """Now, let's go specifically to UVI data archive. You will mainly work with **Level 3 map data**. What does this mean?"""
+    )
     return
 
 
@@ -123,16 +134,20 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(f"""### Solving geometry with Limb fitting
+    mo.md(
+        f"""### Solving geometry with Limb fitting
 
     {mo.image("public/limb-fitting.png", width=600, caption="Fig 2. Examples of limb fitting in IR2 and LIR channels. Fig 5 of Ogohara et al. 2017. Notice that on the night side of IR2 (panel c), we cannot detect the limb, naturally.")}
-    """)
+    """
+    )
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md("""Unless you really need to access the low-level data, you will most likely stick with the Level 3 data.""")
+    mo.md(
+        """Unless you really need to access the low-level data, you will most likely stick with the Level 3 data."""
+    )
     return
 
 
@@ -202,14 +217,15 @@ def _(mo):
 def _(datastore, mo):
     def callout_datadownload(datastore):
         return mo.callout(
-            mo.md("""
+            mo.md(
+                """
     **Sample data downloaded!** Check them out in the file browser tab on the left ("View files") :eyes:
 
     Note that any change in the filesystem is reset when you reload the page.
-    """),
+    """
+            ),
             kind="info",
         )
-
 
     callout_datadownload(datastore)
     return (callout_datadownload,)
@@ -223,6 +239,7 @@ def _(Path, example_uvi):
         for item in sorted(Path("data").iterdir()):
             if item.is_file():
                 print(item.name)
+
     list_files_after_download(example_uvi)
     return (list_files_after_download,)
 
@@ -279,7 +296,8 @@ def _(pd):
     from io import StringIO
 
     _t = pd.read_csv(
-        StringIO("""
+        StringIO(
+            """
     Keyword|Description|Unit
     FIT_STAT|ellipsefit status;-2: OFF but prescribed S_SSCP[X,Y] was used,-1: OFF, 0: NG, 1: OK, 2: OK but inaccurate.|
     S_DISTAV|Sun-spacecraft distance|km
@@ -288,7 +306,8 @@ def _(pd):
     S_SSCLON|longitude of the sub-Spacecraft point|deg
     S_SSCLAT|latitude of the sub-Spacecraft point|deg
     D_NPVAZM|azmiuth of north pole vector in degrees. This angle is defined from the line going towards the left to be positive clock-wise. Thus, +90 deg is north pole up in the image plane, -90 deg vice versa|deg
-    """),
+    """
+        ),
         delimiter="|",
     )
     _t
@@ -303,13 +322,16 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md("""Now let's import [xarray](https://docs.xarray.dev/en/stable/) and load the dataset.""")
+    mo.md(
+        """Now let's import [xarray](https://docs.xarray.dev/en/stable/) and load the dataset."""
+    )
     return
 
 
 @app.cell
 def _():
     import xarray as xr
+
     return (xr,)
 
 
@@ -354,14 +376,15 @@ def _(ds283, pd, xr):
         )
         return df_variables
 
-
     collect_variable_attributes()
     return (collect_variable_attributes,)
 
 
 @app.cell
 def _(mo):
-    mo.md("""The variable capturing the actual image is `radiance`. [xarray](https://docs.xarray.dev/en/stable/) has built-in plotting routines, which makes it easy to make quick decent-looking plots. It automagically annoates the image using the metadata available.""")
+    mo.md(
+        """The variable capturing the actual image is `radiance`. [xarray](https://docs.xarray.dev/en/stable/) has built-in plotting routines, which makes it easy to make quick decent-looking plots. It automagically annoates the image using the metadata available."""
+    )
     return
 
 
@@ -373,7 +396,9 @@ def _(ds283):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md("""Once we plot the image, there's something curious about the colorbar: the radiance (calibrated from photon counts) goes to negative, which cannot be! Well, they technically can be as there is always some statistical noise to a measurement but we can still examine how many pixels have negative radiance with the expectation that there should be very few.""")
+    mo.md(
+        """Once we plot the image, there's something curious about the colorbar: the radiance (calibrated from photon counts) goes to negative, which cannot be! Well, they technically can be as there is always some statistical noise to a measurement but we can still examine how many pixels have negative radiance with the expectation that there should be very few."""
+    )
     return
 
 
@@ -394,7 +419,9 @@ def _(ds283, mo, npix_negative):
 
 @app.cell
 def _(mo):
-    mo.md("""Let's adjust the minimum value of the color scale to a more reasonable value ignoring negative pixels.""")
+    mo.md(
+        """Let's adjust the minimum value of the color scale to a more reasonable value ignoring negative pixels."""
+    )
     return
 
 
@@ -442,7 +469,12 @@ def _(ds283, plot_radiance, plt):
         cvar = ["clear", "lon", "lat", "inangle", "emangle", "phangle"]
         common = dict(add_colorbar=False, add_labels=False)
         fig, ax = plt.subplots(
-            2, 3, figsize=(10, 6), subplot_kw=dict(aspect="equal"), sharex=True, sharey=True
+            2,
+            3,
+            figsize=(10, 6),
+            subplot_kw=dict(aspect="equal"),
+            sharex=True,
+            sharey=True,
         )
         ax = ax.ravel()
         for clabel, cax in zip(cvar, ax):
@@ -456,14 +488,15 @@ def _(ds283, plot_radiance, plt):
             cax.set(title=clabel, xlabel=None, ylabel=None)
         return fig
 
-
     plot_with_contours()
     return (plot_with_contours,)
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md("""With [marimo](https://marimo.io/), I made a quick interface to explore the rest of the sample data files in a similar manner. You will notice that LIR images are much smaller than UVI, and since they capture the thermal emission from the cloud top, you also see the whole disk including the night side.""")
+    mo.md(
+        """With [marimo](https://marimo.io/), I made a quick interface to explore the rest of the sample data files in a similar manner. You will notice that LIR images are much smaller than UVI, and since they capture the thermal emission from the cloud top, you also see the whole disk including the night side."""
+    )
     return
 
 
@@ -473,7 +506,15 @@ def _(contour_variable, mark_geom, mark_limb, mo, select_file, viewer):
         [
             mo.md("### Explore sample UVI and LIR images"),
             mo.hstack(
-                [mo.vstack([select_file, mo.vstack([contour_variable, mark_geom, mark_limb])]), viewer],
+                [
+                    mo.vstack(
+                        [
+                            select_file,
+                            mo.vstack([contour_variable, mark_geom, mark_limb]),
+                        ]
+                    ),
+                    viewer,
+                ],
                 justify="start",
             ),
         ]
@@ -543,10 +584,8 @@ def attic_plotting(np, plt):
         cx, cy = ds["D_SSCPXF"].values, ds["D_SSCPYF"].values
         return (cx, cy)
 
-
     def get_naxis1(ds):
         return ds["axis1"].size
-
 
     def draw_arrow(center, angle, length=200, ax=None):
         if ax is None:
@@ -558,30 +597,41 @@ def attic_plotting(np, plt):
             xy=(x, y),
             xytext=(x + dx, y + dy),
             color="w",
-            arrowprops=dict(arrowstyle="<-", mutation_scale=20, color="w", linewidth=1.3),
+            arrowprops=dict(
+                arrowstyle="<-", mutation_scale=20, color="w", linewidth=1.3
+            ),
         )
 
-
-    def plot_radiance(ds, contour_variable=None, mark_limb=False, mark_geom=False, ax=None, **kwargs):
+    def plot_radiance(
+        ds, contour_variable=None, mark_limb=False, mark_geom=False, ax=None, **kwargs
+    ):
         if ax is None:
             fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(aspect="equal"))
         else:
             fig, ax = ax.figure, ax
 
         ds = ds.isel(time=0)
-        ds["radiance"].plot(ax=ax, cmap="cividis", vmin=ds["radiance"].quantile(0.01), **kwargs)
+        ds["radiance"].plot(
+            ax=ax, cmap="cividis", vmin=ds["radiance"].quantile(0.01), **kwargs
+        )
         if contour_variable is not None and contour_variable != "clear":
             cs1 = ds[contour_variable].plot.contour(ax=ax, linewidths=1)
             ax.clabel(cs1)
 
         if mark_limb:
-            ax.plot(ds["lpxf"], ds["lpyf"], marker="x", ls="none", ms=1, color="#AFDDFF")
+            ax.plot(
+                ds["lpxf"], ds["lpyf"], marker="x", ls="none", ms=1, color="#AFDDFF"
+            )
         if mark_geom:
             ax.plot(*get_center(ds), marker="+", color="k", ms=10)
             draw_arrow(
-                get_center(ds), 180 - float(ds["S_NPVAZM"].values), length=get_naxis1(ds) * 0.2, ax=ax
+                get_center(ds),
+                180 - float(ds["S_NPVAZM"].values),
+                length=get_naxis1(ds) * 0.2,
+                ax=ax,
             )
         return fig
+
     return draw_arrow, get_center, get_naxis1, plot_radiance
 
 
@@ -589,12 +639,10 @@ def attic_plotting(np, plt):
 def _(contour_variable, mark_geom, mark_limb, plot_radiance, select_file):
     # NOTE: it is important I put this in a separate cell to minimize re-execution of the helper func plot_radiance!
 
-
     def plot_radiance_viewer():
         return plot_radiance(
             select_file.value, contour_variable.value, mark_limb.value, mark_geom.value
         )
-
 
     viewer = plot_radiance_viewer()
     return plot_radiance_viewer, viewer
@@ -605,7 +653,6 @@ def _(Path, mo, warnings, xr):
     # NOTE: xarray+netcdf4's io support for http is janky... Just download to local
     from pyodide.http import pyfetch
 
-
     async def fetch_binary_file(url):
         import io
 
@@ -615,8 +662,9 @@ def _(Path, mo, warnings, xr):
             binary_data = io.BytesIO(array_buffer.to_py())
             return binary_data
         else:
-            raise OSError(f"Failed to fetch file: {response.status} {response.statusText}")
-
+            raise OSError(
+                f"Failed to fetch file: {response.status} {response.statusText}"
+            )
 
     async def download_data():
         from zipfile import ZipFile
@@ -627,7 +675,9 @@ def _(Path, mo, warnings, xr):
             )
             with open("data.zip", "wb") as ff:
                 ff.write(binary_file.read())
-            assert Path("data.zip").exists(), "something went wrong; data.zip doesn't exist!"
+            assert Path(
+                "data.zip"
+            ).exists(), "something went wrong; data.zip doesn't exist!"
             with ZipFile("data.zip", "r") as zip_ref:
                 zip_ref.extractall()
         else:
@@ -635,9 +685,11 @@ def _(Path, mo, warnings, xr):
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore")
             datastore = {
-                str(k).split("/")[-1]: xr.load_dataset(k) for k in sorted(Path("data").glob("*.nc"))
+                str(k).split("/")[-1]: xr.load_dataset(k)
+                for k in sorted(Path("data").glob("*.nc"))
             }
         return "data/uvi_20190428_170113_283_l3bx_v21.nc", datastore
+
     return download_data, fetch_binary_file, pyfetch
 
 
