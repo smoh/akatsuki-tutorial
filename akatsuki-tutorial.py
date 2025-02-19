@@ -651,6 +651,7 @@ def _(contour_variable, mark_geom, mark_limb, plot_radiance, select_file):
 @app.cell
 def _(Path, mo, warnings, xr):
     # NOTE: xarray+netcdf4's io support for http is janky... Just download to local
+    # relevant thread: https://github.com/pydata/xarray/issues/3653
     from pyodide.http import pyfetch
 
     async def fetch_binary_file(url):
