@@ -11,3 +11,6 @@ serve:
 
 clean:
 	rm -rf publish
+
+edit:
+	uv run marimo edit akatsuki-tutorial.py

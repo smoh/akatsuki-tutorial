@@ -12,11 +12,10 @@ app = marimo.App(
 def _():
     # not used directly but for pyodide to pick up the dependency
     import netCDF4
-
     return (netCDF4,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     from pathlib import Path
     import warnings
@@ -24,7 +23,6 @@ def _():
     import numpy as np
     import pandas as pd
     import matplotlib.pyplot as plt
-
     return Path, mo, np, pd, plt, warnings
 
 
@@ -96,9 +94,7 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        """Now, let's go specifically to UVI data archive. You will mainly work with **Level 3 map data**. What does this mean?"""
-    )
+    mo.md("""Now, let's go specifically to UVI data archive. You will mainly work with **Level 3 map data**. What does this mean?""")
     return
 
 
@@ -145,9 +141,7 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        """Unless you really need to access the low-level data, you will most likely stick with the Level 3 data."""
-    )
+    mo.md("""Unless you really need to access the low-level data, you will most likely stick with the Level 3 data.""")
     return
 
 
@@ -322,16 +316,13 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        """Now let's import [xarray](https://docs.xarray.dev/en/stable/) and load the dataset."""
-    )
+    mo.md("""Now let's import [xarray](https://docs.xarray.dev/en/stable/) and load the dataset.""")
     return
 
 
 @app.cell
 def _():
     import xarray as xr
-
     return (xr,)
 
 
@@ -341,6 +332,8 @@ def _(example_uvi, warnings, xr):
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         ds283 = xr.open_dataset(example_uvi)
+
+    ds283
     return (ds283,)
 
 
@@ -358,7 +351,7 @@ def _(mo):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(ds283, pd, xr):
     def collect_variable_attributes():
         df_variables = pd.DataFrame(
@@ -382,9 +375,7 @@ def _(ds283, pd, xr):
 
 @app.cell
 def _(mo):
-    mo.md(
-        """The variable capturing the actual image is `radiance`. [xarray](https://docs.xarray.dev/en/stable/) has built-in plotting routines, which makes it easy to make quick decent-looking plots. It automagically annoates the image using the metadata available."""
-    )
+    mo.md("""The variable capturing the actual image is `radiance`. [xarray](https://docs.xarray.dev/en/stable/) has built-in plotting routines, which makes it easy to make quick decent-looking plots. It automagically annoates the image using the metadata available.""")
     return
 
 
@@ -396,9 +387,7 @@ def _(ds283):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        """Once we plot the image, there's something curious about the colorbar: the radiance (calibrated from photon counts) goes to negative, which cannot be! Well, they technically can be as there is always some statistical noise to a measurement but we can still examine how many pixels have negative radiance with the expectation that there should be very few."""
-    )
+    mo.md("""Once we plot the image, there's something curious about the colorbar: the radiance (calibrated from photon counts) goes to negative, which cannot be! Well, they technically can be as there is always some statistical noise to a measurement but we can still examine how many pixels have negative radiance with the expectation that there should be very few.""")
     return
 
 
@@ -417,11 +406,9 @@ def _(ds283, mo, npix_negative):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        """Let's adjust the minimum value of the color scale to a more reasonable value ignoring negative pixels."""
-    )
+    mo.md("""Let's adjust the minimum value of the color scale to a more reasonable value ignoring negative pixels.""")
     return
 
 
@@ -494,9 +481,7 @@ def _(ds283, plot_radiance, plt):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        """With [marimo](https://marimo.io/), I made a quick interface to explore the rest of the sample data files in a similar manner. You will notice that LIR images are much smaller than UVI, and since they capture the thermal emission from the cloud top, you also see the whole disk including the night side."""
-    )
+    mo.md("""With [marimo](https://marimo.io/), I made a quick interface to explore the rest of the sample data files in a similar manner. You will notice that LIR images are much smaller than UVI, and since they capture the thermal emission from the cloud top, you also see the whole disk including the night side.""")
     return
 
 
@@ -631,7 +616,6 @@ def attic_plotting(np, plt):
                 ax=ax,
             )
         return fig
-
     return draw_arrow, get_center, get_naxis1, plot_radiance
 
 
@@ -690,7 +674,6 @@ def _(Path, mo, warnings, xr):
                 for k in sorted(Path("data").glob("*.nc"))
             }
         return "data/uvi_20190428_170113_283_l3bx_v21.nc", datastore
-
     return download_data, fetch_binary_file, pyfetch
 
 
