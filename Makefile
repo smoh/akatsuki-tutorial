@@ -4,7 +4,10 @@
 all: clean publish serve
 
 publish: akatsuki-tutorial.py
-	uv run marimo export html-wasm akatsuki-tutorial.py -o publish --mode edit --no-show-code
+	mkdir publish
+	uv run marimo export html-wasm akatsuki-tutorial.py -o publish/live --mode edit
+	cp frozen.html publish/index.html	
+	
 
 serve:
 	python -m http.server --directory publish

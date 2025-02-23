@@ -522,18 +522,6 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(
-        """
-        ---
-
-        ## Under the hood
-        """
-    )
-    return
-
-
-@app.cell(hide_code=True)
 def attic_select_file(datastore, mo):
     select_file = mo.ui.radio(
         datastore, value="uvi_20190428_170113_283_l3bx_v21.nc", label="Select file"
@@ -541,7 +529,7 @@ def attic_select_file(datastore, mo):
     return (select_file,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     contour_variable = mo.ui.radio(
         {
@@ -563,7 +551,7 @@ def _(mo):
     return contour_variable, mark_geom, mark_limb
 
 
-@app.cell
+@app.cell(hide_code=True)
 def attic_plotting(np, plt):
     def get_center(ds):
         cx, cy = ds["D_SSCPXF"].values, ds["D_SSCPYF"].values
@@ -619,7 +607,7 @@ def attic_plotting(np, plt):
     return draw_arrow, get_center, get_naxis1, plot_radiance
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(contour_variable, mark_geom, mark_limb, plot_radiance, select_file):
     # NOTE: it is important I put this in a separate cell to minimize re-execution of the helper func plot_radiance!
 
@@ -632,7 +620,7 @@ def _(contour_variable, mark_geom, mark_limb, plot_radiance, select_file):
     return plot_radiance_viewer, viewer
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(Path, mo, warnings, xr):
     # NOTE: xarray+netcdf4's io support for http is janky... Just download to local
     # relevant thread: https://github.com/pydata/xarray/issues/3653
@@ -677,7 +665,7 @@ def _(Path, mo, warnings, xr):
     return download_data, fetch_binary_file, pyfetch
 
 
-@app.cell
+@app.cell(hide_code=True)
 async def _(download_data):
     example_uvi, datastore = await download_data()
     return datastore, example_uvi
