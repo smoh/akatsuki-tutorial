@@ -1,6 +1,8 @@
 # Akatsuki tutorial
 
-![](screenshot.png)
+![](slide0.png)
+
+![](interact.gif)
 
 This repository contains a short tutorial on JAXA's Akatsuki mission, and how to use its data using python.
 
