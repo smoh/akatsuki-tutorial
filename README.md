@@ -1,5 +1,7 @@
 # Akatsuki tutorial
 
+![](screenshot.png)
+
 This repository contains a short tutorial on JAXA's Akatsuki mission, and how to use its data using python.
 
 It was prepared for 2025 winter internship program at the Planetary Atmospheres Group (IBS).
